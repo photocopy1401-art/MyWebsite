@@ -42,35 +42,52 @@ footer{text-align:center;color:var(--muted);padding:25px}
 
 
 .music-player {
-    position: fixed;
-    top: 20px;
-    left: 20px;
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
 
-    width: 280px;
-    padding: 12px;
+    width: 260px;
+    margin: 15px 0 20px 0;
+    padding: 10px;
 
     background: white;
     border: 1px solid #D5DDE9;
     border-radius: 12px;
-
     box-shadow: 0 5px 20px rgba(0,0,0,0.12);
 
-    text-align: center;
-    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
-.music-player p {
+.music-player span {
     color: #2563EB;
-    font-family: Tahoma;
     font-weight: bold;
-    margin: 5px 0 10px;
+    font-family: Tahoma;
 }
 
 .music-player audio {
     width: 100%;
 }
 
-    
+/* تنظیمات گوشی */
+@media (max-width: 600px) {
+    .music-player {
+        width: 190px;
+        padding: 8px;
+    }
+
+    .music-player audio {
+        height: 35px;
+    }
+
+    .music-player span {
+        font-size: 12px;
+    }
+}
+
+
 </style>
 </head>
 <body>
@@ -80,6 +97,14 @@ footer{text-align:center;color:var(--muted);padding:25px}
 <p>از مفاهیم پایه تا ارتباط با صفحه، ذخیره‌سازی و دریافت اطلاعات از سرور</p>
 <p class="small" style="color:#e5eefb">نسخه آموزشی مستقل | قابل اجرا در مرورگر و قابل ویرایش با Notepad</p>
 </header>
+
+<div class="music-player">
+    <span>🎵 موسیقی سایت</span>
+
+    <audio controls loop>
+        <source src="music=125.mp3" type="audio/mpeg">
+    </audio>
+</div>
 
 <nav>
 <strong>فهرست مباحث</strong>
@@ -547,13 +572,4 @@ document.getElementById('finalForm').addEventListener('submit',function(event){
 
 
 </body>
-<div class="music-player">
-
-    <p>🎵 موسیقی سایت</p>
-
-    <audio id="siteMusic" controls loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-</div>
 </html>
