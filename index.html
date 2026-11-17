@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جزوه تعاملی آموزش JavaScript با مثال اسنپ</title>
+<style>
+:root{--navy:#18345f;--blue:#285da8;--pale:#eef4fc;--ink:#243044;--muted:#65748b;--line:#dce4ef;--green:#137547;--orange:#a45b00}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:2}
+main{max-width:1000px;margin:auto;padding:22px 14px 60px}
+header{background:linear-gradient(130deg,#17345f,#3268b2);color:white;border-radius:18px;padding:28px;margin-bottom:18px}
+header h1{font-size:25px;margin:0 0 8px}
+header p{margin:5px 0;color:#e5eefb}
+nav{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:18px}
+nav strong{display:block;margin-bottom:8px}
+nav a{display:inline-block;margin:4px 6px;color:var(--blue);text-decoration:none;background:var(--pale);padding:4px 10px;border-radius:8px;font-size:13px}
+section{background:white;border:1px solid var(--line);border-radius:15px;padding:22px;margin:16px 0;scroll-margin-top:12px}
+h2{font-size:20px;color:var(--navy);margin:0 0 10px}
+h3{font-size:16px;color:#294d7d;margin:16px 0 6px}
+p{margin:7px 0}
+.tag{display:inline-block;background:#e8f0fc;color:#244d86;padding:2px 9px;border-radius:20px;font-size:12px;margin-bottom:8px}
+.note{background:#fff8e9;border-right:4px solid #e5a23c;padding:10px 13px;border-radius:8px;margin:12px 0}
+.explain{background:#f4f7fb;padding:12px 15px;border-radius:9px}
+pre{direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;background:#17253b;color:#e7efff;padding:15px;border-radius:10px;overflow:auto;font:13px/1.8 Consolas,monospace}
+code{font-family:Consolas,monospace;direction:ltr;unicode-bidi:embed}
+.demo{background:#f7f9fd;border:1px dashed #b8c8de;padding:14px;border-radius:11px;margin-top:13px}
+.demo-title{font-weight:bold;color:#244d86;margin-bottom:7px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+input,select{font:inherit;padding:8px 10px;border:1px solid #c7d2e2;border-radius:8px;min-width:130px;max-width:100%;background:white}
+button{font:inherit;border:0;border-radius:8px;background:var(--blue);color:white;padding:8px 14px;cursor:pointer}
+button.secondary{background:#5d6b80}
+button:hover{filter:brightness(.94)}
+.output{background:white;border:1px solid #dce4ef;border-radius:8px;padding:10px;min-height:42px;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+.success{color:var(--green)}.warning{color:var(--orange)}
+.small{font-size:13px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+td,th{border:1px solid var(--line);padding:8px;text-align:right}
+th{background:var(--pale);color:var(--navy)}
+footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:600px){header h1{font-size:21px}section{padding:16px}pre{font-size:12px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>جزوه تعاملی آموزش JavaScript با مثال اسنپ</h1>
+<p>از مفاهیم پایه تا ارتباط با صفحه، ذخیره‌سازی و دریافت اطلاعات از سرور</p>
+<p class="small" style="color:#e5eefb">نسخه آموزشی مستقل | قابل اجرا در مرورگر و قابل ویرایش با Notepad</p>
+</header>
+
+<nav>
+<strong>فهرست مباحث</strong>
+<a href="#intro">۱. JavaScript چیست؟</a><a href="#variables">۲. متغیرها</a><a href="#types">۳. انواع داده</a>
+<a href="#operators">۴. عملگرها</a><a href="#conditions">۵. شرط‌ها</a><a href="#loops">۶. حلقه‌ها</a>
+<a href="#functions">۷. توابع</a><a href="#arrays">۸. آرایه‌ها</a><a href="#objects">۹. اشیا</a>
+<a href="#dom">۱۰. DOM</a><a href="#events">۱۱. رویدادها</a><a href="#forms">۱۲. فرم‌ها</a>
+<a href="#storage">۱۳. LocalStorage</a><a href="#fetch">۱۴. Fetch API</a><a href="#debug">۱۵. خطایابی</a>
+<a href="#project">پروژه پایانی</a><a href="#practice">تمرین‌ها</a>
+</nav>
+
+<section id="intro">
+<span class="tag">مفهوم پایه</span><h2>۱. JavaScript چیست؟</h2>
+<p>JavaScript زبانی برنامه‌نویسی است که به صفحه وب رفتار و منطق می‌دهد. با آن می‌توان اطلاعات ورودی کاربر را خواند، محاسبه انجام داد، تصمیم گرفت و محتوای صفحه را تغییر داد.</p>
+<h3>مثال در محصولی شبیه اسنپ</h3>
+<table><tr><th>فناوری</th><th>نقش در صفحه درخواست خودرو</th></tr><tr><td>HTML</td><td>ساخت فیلد مبدأ، مقصد و دکمه درخواست</td></tr><tr><td>CSS</td><td>تعیین رنگ، اندازه و چیدمان اجزا</td></tr><tr><td>JavaScript</td><td>بررسی ورودی، محاسبه کرایه و واکنش به کلیک</td></tr></table>
+<pre>console.log("به سامانه درخواست سفر خوش آمدید");
+alert("برای شروع، مبدأ و مقصد را وارد کنید");</pre>
+<div class="explain"><b>توضیح:</b> <code>console.log()</code> پیام را در ابزار Console مرورگر نشان می‌دهد. <code>alert()</code> یک پنجره پیام باز می‌کند.</div>
+<div class="demo"><div class="demo-title">دموی قابل اجرا</div><button onclick="alert('به سامانه درخواست سفر خوش آمدید')">نمایش پیام خوشامدگویی</button><p class="small">کاربرد محصولی: پیام خوشامدگویی، اطلاع‌رسانی و بررسی اجرای کد.</p></div>
+</section>
+
+<section id="variables">
+<span class="tag">نگهداری اطلاعات</span><h2>۲. متغیرها (Variables)</h2>
+<p>متغیر نامی برای نگهداری یک مقدار است. اطلاعات سفر مانند نام مسافر، مبدأ، مقصد و مبلغ را می‌توان در متغیرها نگهداری کرد.</p>
+<pre>let passengerName = "سارا";
+let origin = "میدان آزادی";
+let destination = "میدان فردوسی";
+let tripPrice = 120000;
+
+const serviceName = "سرویس سفر";</pre>
+<div class="explain"><b>توضیح خط‌به‌خط:</b><br><code>let</code> متغیری می‌سازد که مقدارش قابل تغییر است. <code>const</code> برای متغیری است که دوباره به آن مقدار جدیدی نسبت نمی‌دهیم. نام متغیر بهتر است معنی‌دار و خوانا باشد.</div>
+<h3>تغییر مقدار مقصد</h3>
+<pre>let destination = "میدان فردوسی";
+destination = "فرودگاه";
+console.log(destination); // فرودگاه</pre>
+<div class="demo"><div class="demo-title">دموی قابل اجرا</div><div class="row"><input id="varName" value="سارا" aria-label="نام مسافر"><input id="varDest" value="فرودگاه" aria-label="مقصد"></div><button onclick="showVariables()">نمایش اطلاعات متغیرها</button><div class="output" id="varOut">نتیجه اینجا نمایش داده می‌شود.</div></div>
+<p><b>کاربرد در محصول:</b> نگهداری موقت اطلاعات فرم، وضعیت جاری سفارش، نام کاربر و مبلغ محاسبه‌شده. داده‌های مهم و دائمی معمولاً باید در سرور یا پایگاه داده نیز ذخیره شوند.</p>
+</section>
+
+<section id="types">
+<span class="tag">شناخت داده</span><h2>۳. انواع داده (Data Types)</h2>
+<p>هر مقدار در JavaScript نوعی دارد. نوع داده مشخص می‌کند با مقدار چه عملیاتی می‌توان انجام داد.</p>
+<table><tr><th>نوع</th><th>نمونه</th><th>کاربرد در محصول</th></tr><tr><td>String</td><td><code>"سارا"</code></td><td>نام و نشانی</td></tr><tr><td>Number</td><td><code>12.5</code></td><td>مسافت، مبلغ و امتیاز</td></tr><tr><td>Boolean</td><td><code>true</code></td><td>فعال بودن سرویس یا موجود بودن راننده</td></tr><tr><td>Undefined</td><td>متغیر تعریف‌شده بدون مقدار</td><td>مقداری هنوز تعیین نشده است</td></tr><tr><td>Null</td><td><code>null</code></td><td>نبود عمدی یک مقدار</td></tr></table>
+<pre>let passengerName = "سارا"; // String
+let distance = 12.5;         // Number
+let driverAvailable = true;  // Boolean
+let selectedDriver = null;   // فعلاً راننده‌ای انتخاب نشده</pre>
+<div class="demo"><div class="demo-title">دموی قابل اجرا</div><button onclick="showTypes()">نمایش نوع داده‌ها</button><div class="output" id="typeOut">برای دیدن نوع داده‌ها کلیک کنید.</div></div>
+<p><b>کاربرد در محصول:</b> تشخیص اینکه مبلغ عدد است یا متن، بررسی وضعیت روشن/خاموش، و نمایش درست داده‌ها در رابط کاربری.</p>
+</section>
+
+<section id="operators">
+<span class="tag">محاسبات و مقایسه</span><h2>۴. عملگرها (Operators)</h2>
+<p>عملگرها برای محاسبه، مقایسه و ترکیب شرط‌ها استفاده می‌شوند.</p>
+<table><tr><th>دسته</th><th>عملگرها</th><th>نمونه کاربرد</th></tr><tr><td>ریاضی</td><td><code>+ - * / %</code></td><td>محاسبه کرایه</td></tr><tr><td>مقایسه</td><td><code>=== !== &gt; &lt; &gt;= &lt;=</code></td><td>بررسی حداقل مبلغ</td></tr><tr><td>منطقی</td><td><code>&amp;&amp; || !</code></td><td>بررسی هم‌زمان مبدأ و مقصد</td></tr><tr><td>انتساب</td><td><code>= += -=</code></td><td>به‌روزرسانی مقدار</td></tr></table>
+<pre>let distance = 12;
+let pricePerKm = 10000;
+let total = distance * pricePerKm;
+
+let originIsValid = true;
+let destinationIsValid = true;
+let canRequest = originIsValid && destinationIsValid;</pre>
+<h3>تابع کامل محاسبه کرایه؛ کد را خط‌به‌خط ببینید</h3>
+<pre>function calculateFare(distance, pricePerKm) {
+  // مرحله ۱: بررسی ورودی‌ها
+  if (distance &lt;= 0 || pricePerKm &lt; 0) {
+    return 0;
+  }
+
+  // مرحله ۲: محاسبه مبلغ پایه
+  const baseFare = distance * pricePerKm;
+
+  // مرحله ۳: برگرداندن نتیجه به جایی که تابع فراخوانی شده
+  return baseFare;
+}
+
+// مرحله ۴: فراخوانی تابع با دو ورودی
+const finalFare = calculateFare(12, 10000);
+
+console.log(finalFare); // 120000</pre>
+<div class="explain"><b>توضیح خط‌به‌خط:</b><br>
+۱. <code>function calculateFare(distance, pricePerKm)</code> تابعی به نام calculateFare می‌سازد که دو ورودی می‌گیرد: مسافت و نرخ هر کیلومتر.<br>
+۲. شرط <code>if</code> ورودی نامعتبر را بررسی می‌کند.<br>
+۳. متغیر <code>baseFare</code> حاصل‌ضرب مسافت در نرخ هر کیلومتر را نگه می‌دارد.<br>
+۴. دستور <code>return</code> نتیجه را از تابع بیرون می‌فرستد؛ اگر return نباشد، خروجی تابع به‌صورت پیش‌فرض undefined خواهد بود.<br>
+۵. در خط آخر تابع را با مقادیر ۱۲ و ۱۰۰۰۰ اجرا کرده‌ایم؛ بنابراین خروجی ۱۲۰۰۰۰ می‌شود.</div>
+<div class="demo"><div class="demo-title">اجرای همان تابع با ورودی دلخواه</div><div class="row"><label>مسافت (کیلومتر)</label><input id="distanceInput" type="number" min="0" value="12"><label>هزینه هر کیلومتر</label><input id="rateInput" type="number" min="0" value="10000"></div><button onclick="calculateFareDemo()">اجرای تابع calculateFare</button><div class="output" id="fareOut">مقدار ورودی بدهید و تابع را اجرا کنید.</div><p class="small">این فرمول آموزشی است و قیمت واقعی سرویس‌های حمل‌ونقل را نشان نمی‌دهد.</p></div>
+<p><b>کاربرد در محصول:</b> این تابع نمونه ساده‌ای از منطق قیمت‌گذاری است. در محصول واقعی ممکن است هزینه پایه، ترافیک، زمان، نوع سرویس، عوارض، تخفیف و قواعد سمت سرور نیز دخیل باشند.</p>
+</section>
+
+<section id="conditions">
+<span class="tag">تصمیم‌گیری</span><h2>۵. شرط‌ها (Conditions)</h2>
+<p>شرط به برنامه امکان می‌دهد بر اساس وضعیت داده‌ها مسیرهای متفاوتی اجرا کند. ساختارهای رایج <code>if</code>، <code>else if</code> و <code>else</code> هستند.</p>
+<pre>let driverAvailable = true;
+
+if (driverAvailable === true) {
+  console.log("درخواست در حال ثبت است");
+} else {
+  console.log("راننده‌ای موجود نیست");
+}</pre>
+<div class="explain"><b>نکته:</b> برای مقایسه معمولاً از <code>===</code> استفاده کنید؛ این عملگر هم مقدار و هم نوع داده را مقایسه می‌کند.</div>
+<div class="demo"><div class="demo-title">بررسی وضعیت درخواست</div><div class="row"><select id="driverStatus"><option value="yes">راننده موجود است</option><option value="no">راننده موجود نیست</option></select><button onclick="checkDriver()">بررسی و ثبت آزمایشی</button></div><div class="output" id="driverOut">نتیجه اینجا نمایش داده می‌شود.</div></div>
+<h3>مثال دوم: اعتبارسنجی مبلغ</h3>
+<pre>if (tripPrice > 100000) {
+  console.log("سفر مشمول تخفیف آزمایشی است");
+} else {
+  console.log("تخفیفی اعمال نمی‌شود");
+}</pre>
+<p><b>کاربرد در محصول:</b> بررسی موجود بودن سرویس، اعتبار کد تخفیف، کامل بودن فرم، وضعیت پرداخت و مجاز بودن یک عملیات.</p>
+</section>
+
+<section id="loops">
+<span class="tag">تکرار عملیات</span><h2>۶. حلقه‌ها (Loops)</h2>
+<p>حلقه‌ها یک دستور را چند بار اجرا می‌کنند. وقتی با فهرستی از رانندگان یا سفارش‌ها روبه‌رو هستیم، حلقه‌ها بسیار مفیدند.</p>
+<pre>const drivers = ["علی", "رضا", "محمد", "حسین"];
+
+for (let i = 0; i < drivers.length; i++) {
+  console.log(drivers[i]);
+}</pre>
+<div class="explain"><b>توضیح:</b> <code>i</code> شماره جایگاه است و از صفر شروع می‌شود. <code>drivers.length</code> تعداد اعضای آرایه را می‌دهد. با هر دور حلقه، <code>i++</code> آن را یک واحد افزایش می‌دهد.</div>
+<div class="demo"><div class="demo-title">نمایش فهرست رانندگان پیشنهادی</div><button onclick="showDrivers()">اجرای حلقه</button><div class="output" id="loopOut">با کلیک، فهرست ساخته می‌شود.</div></div>
+<p><b>کاربرد در محصول:</b> نمایش فهرست سفرها، پیمایش نتایج جست‌وجو، محاسبه مجموع سبد خرید و پردازش مجموعه‌ای از داده‌ها.</p>
+</section>
+
+<section id="functions">
+<span class="tag">کد قابل استفاده مجدد</span><h2>۷. توابع (Functions)</h2>
+<p>تابع مجموعه‌ای از دستورهاست که برای انجام یک کار مشخص تعریف می‌شود. تابع می‌تواند ورودی بگیرد و با <code>return</code> نتیجه برگرداند.</p>
+<pre>function calculatePrice(distance) {
+  const pricePerKm = 10000;
+  const totalPrice = distance * pricePerKm;
+  return totalPrice;
+}
+
+const tripPrice = calculatePrice(12);
+console.log(tripPrice); // 120000</pre>
+<div class="explain"><b>اجزای تابع:</b> <code>function</code> کلمه تعریف تابع است؛ <code>calculatePrice</code> نام تابع؛ <code>distance</code> پارامتر ورودی؛ و <code>return</code> نتیجه را به محل فراخوانی برمی‌گرداند.</div>
+<div class="explain"><b>تابع را در این مثال کامل می‌بینید:</b> ورودی تابع <code>distance</code> است؛ تابع نرخ هر کیلومتر را تعیین می‌کند، مبلغ را حساب می‌کند و با <code>return</code> برمی‌گرداند. سپس مقدار برگشتی در متغیر <code>tripPrice</code> ذخیره و نمایش داده می‌شود.</div>
+<pre>function calculatePrice(distance) {
+  const pricePerKm = 10000;
+  const totalPrice = distance * pricePerKm;
+
+  return totalPrice;
+}
+
+// اجرای تابع
+const tripPrice = calculatePrice(8);
+
+// استفاده از نتیجه
+console.log("کرایه:", tripPrice); // 80000</pre>
+<div class="demo"><div class="demo-title">اجرای تابع محاسبه کرایه</div><div class="row"><input id="functionDistance" type="number" value="8" min="0"><button onclick="runPriceFunction()">محاسبه با تابع</button></div><div class="output" id="functionOut">نتیجه اینجا نمایش داده می‌شود.</div></div>
+<p><b>کاربرد در محصول:</b> محاسبه مبلغ، محاسبه تخفیف، اعتبارسنجی ورودی، تبدیل تاریخ و قالب‌بندی قیمت. هر منطق تکرارشونده را می‌توان در تابعی مستقل قرار داد.</p>
+</section>
+
+<section id="arrays">
+<span class="tag">مجموعه داده‌ها</span><h2>۸. آرایه‌ها (Arrays)</h2>
+<p>آرایه برای نگهداری چند مقدار در یک متغیر استفاده می‌شود. شماره‌گذاری اعضا از صفر آغاز می‌شود.</p>
+<pre>const trips = [
+  "میدان آزادی به میدان فردوسی",
+  "فرودگاه به مرکز شهر",
+  "دانشگاه به میدان آزادی"
+];
+
+console.log(trips[0]); // اولین سفر
+trips.push("خانه به دانشگاه"); // افزودن سفر
+console.log(trips.length); // تعداد سفرها</pre>
+<div class="demo"><div class="demo-title">مدیریت فهرست سفرها</div><div class="row"><input id="newTrip" placeholder="مثلاً خانه به دانشگاه"><button onclick="addTrip()">افزودن سفر</button><button class="secondary" onclick="listTrips()">نمایش فهرست</button></div><div class="output" id="arrayOut">فهرست سفرها در این قسمت نمایش داده می‌شود.</div></div>
+<p><b>کاربرد در محصول:</b> فهرست رانندگان، سفرهای قبلی، کالاها، پیام‌ها، کدهای تخفیف و نتایج جست‌وجو.</p>
+</section>
+
+<section id="objects">
+<span class="tag">مدل‌سازی موجودیت</span><h2>۹. اشیا (Objects)</h2>
+<p>شیء مجموعه‌ای از ویژگی‌های مرتبط را در قالب زوج‌های کلید و مقدار نگهداری می‌کند. برای نمایش یک موجودیت واقعی مثل سفر مناسب است.</p>
+<pre>const trip = {
+  passenger: "سارا",
+  origin: "میدان آزادی",
+  destination: "فرودگاه",
+  distance: 12,
+  price: 120000,
+  status: "در انتظار راننده"
+};
+
+console.log(trip.passenger);
+console.log(trip.price);</pre>
+<div class="explain"><b>تفاوت آرایه و شیء:</b> آرایه برای فهرست چند عضو مناسب است؛ شیء برای نگهداری ویژگی‌های یک عضو. در محصول، می‌توان آرایه‌ای از اشیای سفر داشت.</div>
+<pre>const trips = [
+  { origin: "خانه", destination: "دانشگاه", price: 80000 },
+  { origin: "فرودگاه", destination: "مرکز شهر", price: 150000 }
+];</pre>
+<div class="demo"><div class="demo-title">ساخت شیء سفر از ورودی‌ها</div><div class="row"><input id="objectOrigin" value="خانه" placeholder="مبدأ"><input id="objectDestination" value="دانشگاه" placeholder="مقصد"></div><button onclick="showTripObject()">نمایش اطلاعات سفر</button><div class="output" id="objectOut">خروجی شیء اینجا نمایش داده می‌شود.</div></div>
+<p><b>کاربرد در محصول:</b> مدل‌سازی کاربر، سفارش، سفر، محصول، راننده و پرداخت؛ هرکدام می‌توانند ویژگی‌های مخصوص خود را داشته باشند.</p>
+</section>
+
+<section id="dom">
+<span class="tag">ارتباط با HTML</span><h2>۱۰. DOM؛ ارتباط JavaScript با صفحه HTML</h2>
+<p>مرورگر از عناصر HTML یک ساختار درختی به نام DOM می‌سازد. JavaScript با استفاده از DOM می‌تواند عناصر را پیدا کند و متن، ویژگی یا ظاهر آن‌ها را تغییر دهد.</p>
+<pre>&lt;h2 id="title"&gt;درخواست خودرو&lt;/h2&gt;
+
+// انتخاب عنصر
+const heading = document.getElementById("title");
+
+// تغییر متن
+heading.textContent = "مقصد خود را انتخاب کنید";
+
+// تغییر ظاهر
+heading.style.color = "blue";</pre>
+<div class="explain"><b>توضیح:</b> <code>document</code> نماینده صفحه است. <code>getElementById()</code> عنصر دارای شناسه مشخص را پیدا می‌کند. <code>textContent</code> متن و <code>style</code> ظاهر عنصر را تغییر می‌دهد. روش رایج دیگر <code>querySelector()</code> است.</div>
+<div class="demo"><div class="demo-title">تغییر زنده عنصر صفحه</div><h3 id="domTitle">درخواست خودرو</h3><div class="row"><button onclick="changeDomText()">تغییر متن</button><button class="secondary" onclick="changeDomColor()">تغییر رنگ</button></div></div>
+<p><b>کاربرد در محصول:</b> نمایش مبلغ، تغییر وضعیت سفارش، نشان دادن پیام خطا، به‌روزرسانی عنوان و ساخت محتوای پویا.</p>
+</section>
+
+<section id="events">
+<span class="tag">واکنش به رفتار کاربر</span><h2>۱۱. رویدادها (Events)</h2>
+<p>رویداد اتفاقی در صفحه است؛ مانند کلیک، تایپ‌کردن یا تغییر یک گزینه. با <code>addEventListener()</code> مشخص می‌کنیم هنگام وقوع رویداد چه کدی اجرا شود.</p>
+<pre>const button = document.getElementById("requestButton");
+
+button.addEventListener("click", function() {
+  document.getElementById("message").textContent =
+    "درخواست آزمایشی شما ثبت شد";
+});</pre>
+<table><tr><th>رویداد</th><th>کاربرد</th></tr><tr><td><code>click</code></td><td>کلیک روی دکمه درخواست</td></tr><tr><td><code>input</code></td><td>تایپ مقصد</td></tr><tr><td><code>change</code></td><td>تغییر نوع سرویس</td></tr><tr><td><code>submit</code></td><td>ارسال فرم</td></tr><tr><td><code>mouseover</code></td><td>رفتن نشانگر روی یک بخش</td></tr></table>
+<div class="demo"><div class="demo-title">رویداد کلیک</div><button id="eventButton">درخواست خودرو</button><div class="output" id="eventOut">هنوز کلیکی انجام نشده است.</div></div>
+<p><b>تفاوت DOM و Event:</b> DOM راه دسترسی و تغییر عناصر صفحه را فراهم می‌کند؛ Event تعیین می‌کند چه زمانی واکنش برنامه اجرا شود.</p>
+<p><b>کاربرد در محصول:</b> واکنش به کلیک دکمه‌ها، تایپ کاربر، انتخاب فیلتر، باز و بسته شدن پنجره‌ها و ارسال فرم.</p>
+</section>
+
+<section id="forms">
+<span class="tag">دریافت و اعتبارسنجی ورودی</span><h2>۱۲. فرم‌ها (Forms)</h2>
+<p>فرم برای دریافت داده از کاربر استفاده می‌شود. در سناریوی سفر، مبدأ و مقصد از طریق فرم دریافت می‌شوند.</p>
+<pre>const form = document.getElementById("tripForm");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const origin = document.getElementById("origin").value.trim();
+  const destination = document.getElementById("destination").value.trim();
+
+  if (origin === "" || destination === "") {
+    // نمایش پیام خطا
+  } else {
+    // آماده‌سازی درخواست
+  }
+});</pre>
+<div class="explain"><b>توضیح:</b> <code>value</code> مقدار فیلد را می‌خواند؛ <code>trim()</code> فاصله ابتدا و انتهای متن را حذف می‌کند؛ <code>preventDefault()</code> از رفتار پیش‌فرض ارسال فرم و بارگذاری مجدد صفحه جلوگیری می‌کند.</div>
+<div class="demo"><div class="demo-title">فرم درخواست سفر آزمایشی</div><form id="tripForm"><div class="row"><input id="formOrigin" placeholder="مبدأ"><input id="formDestination" placeholder="مقصد"><button type="submit">ثبت درخواست</button></div></form><div class="output" id="formOut">نتیجه بررسی فرم اینجا نمایش داده می‌شود.</div></div>
+<div class="note">اعتبارسنجی سمت مرورگر برای تجربه کاربری مفید است، اما برای امنیت کافی نیست. سرور نیز باید داده‌های دریافتی را اعتبارسنجی کند.</div>
+<p><b>کاربرد در محصول:</b> ثبت‌نام، ورود، ثبت سفارش، جست‌وجو، ثبت درخواست و دریافت اطلاعات تماس.</p>
+</section>
+
+<section id="storage">
+<span class="tag">ذخیره در مرورگر</span><h2>۱۳. LocalStorage؛ ذخیره اطلاعات در مرورگر</h2>
+<p>LocalStorage امکان ذخیره داده‌های متنی را در مرورگر فراهم می‌کند؛ داده‌ها پس از بستن مرورگر نیز معمولاً باقی می‌مانند، مگر اینکه پاک شوند.</p>
+<pre>// ذخیره
+localStorage.setItem("lastDestination", "فرودگاه");
+
+// خواندن
+const destination = localStorage.getItem("lastDestination");
+
+// حذف
+localStorage.removeItem("lastDestination");</pre>
+<div class="explain"><b>سه متد اصلی:</b> <code>setItem</code> ذخیره می‌کند؛ <code>getItem</code> می‌خواند؛ <code>removeItem</code> یک مورد را حذف می‌کند. برای پاک‌کردن همه موارد همان وب‌سایت از <code>clear()</code> استفاده می‌شود.</div>
+<div class="demo"><div class="demo-title">ذخیره آخرین مقصد در همین مرورگر</div><div class="row"><input id="storageValue" placeholder="مثلاً فرودگاه"><button onclick="saveDestination()">ذخیره</button><button class="secondary" onclick="readDestination()">خواندن</button><button class="secondary" onclick="deleteDestination()">حذف</button></div><div class="output" id="storageOut">وضعیت ذخیره‌سازی نمایش داده می‌شود.</div></div>
+<div class="note">اطلاعات حساس مانند رمز عبور، اطلاعات بانکی یا توکن‌های حساس را بدون طراحی امنیتی مناسب در LocalStorage ذخیره نکنید. این ذخیره‌سازی به سرور منتقل نمی‌شود.</div>
+<p><b>کاربرد در محصول:</b> نگهداری ترجیح‌های ظاهری، آخرین مقصد، زبان انتخابی یا حالت روشن/تاریک. برای داده‌های حساس و همگام‌سازی بین دستگاه‌ها باید راهکار سمت سرور در نظر گرفت.</p>
+</section>
+
+<section id="fetch">
+<span class="tag">ارتباط با سرور</span><h2>۱۴. Fetch API؛ دریافت اطلاعات از سرور</h2>
+<p>در برنامه واقعی، اطلاعات کاربران، رانندگان، قیمت و وضعیت سفر معمولاً از API سرور دریافت می‌شود. Fetch API برای ارسال درخواست HTTP و دریافت پاسخ به کار می‌رود.</p>
+<pre>fetch("https://jsonplaceholder.typicode.com/posts/1")
+  .then(response => {
+    if (!response.ok) throw new Error("پاسخ سرور ناموفق بود");
+    return response.json();
+  })
+  .then(data => {
+    console.log(data.title);
+  })
+  .catch(error => {
+    console.log("خطا:", error.message);
+  });</pre>
+<div class="explain"><b>توضیح:</b> <code>fetch()</code> درخواست را ارسال می‌کند. <code>response.json()</code> بدنه پاسخ را به داده JavaScript تبدیل می‌کند. <code>then()</code> ادامه کار پس از آماده‌شدن پاسخ را مشخص می‌کند و <code>catch()</code> خطاهای شبکه یا خطاهای پرتاب‌شده را مدیریت می‌کند.</div>
+<div class="demo"><div class="demo-title">دریافت یک مطلب از API آزمایشی</div><button id="fetchButton" onclick="loadSampleApi()">دریافت اطلاعات آزمایشی</button><div class="output" id="fetchOut">برای اجرای این بخش اتصال اینترنت لازم است.</div></div>
+<div class="note">این دمو از API عمومی آزمایشی استفاده می‌کند و برای اجرا به اینترنت نیاز دارد. برای دریافت داده واقعی سفر باید API اختصاصی و مجوز دسترسی به آن وجود داشته باشد.</div>
+<p><b>کاربرد در محصول:</b> دریافت قیمت، فهرست رانندگان، ثبت سفارش، بارگذاری تاریخچه و ارسال وضعیت پرداخت به سرور.</p>
+</section>
+
+<section id="debug">
+<span class="tag">پیدا کردن و رفع خطا</span><h2>۱۵. خطایابی (Debugging)</h2>
+<p>خطایابی یعنی پیدا کردن علت درست کار نکردن برنامه و اصلاح آن. ابزارهای توسعه مرورگر کمک می‌کنند مقدار متغیرها، خطاها و روند اجرای کد را بررسی کنیم.</p>
+<pre>const distance = 12;
+const pricePerKm = 10000;
+
+console.log("مسافت:", distance);
+console.log("هزینه هر کیلومتر:", pricePerKm);
+
+const totalPrice = distance * pricePerKm;
+console.log("هزینه نهایی:", totalPrice);</pre>
+<h3>مراحل بررسی خطا در مرورگر</h3>
+<ol><li>فایل را در Chrome یا مرورگر دیگری باز کنید.</li><li>کلید F12 را بزنید.</li><li>در بخش Console پیام‌های خطا را بخوانید.</li><li>در بخش Sources می‌توانید اجرای کد را مرحله‌به‌مرحله متوقف و بررسی کنید.</li></ol>
+<div class="demo"><div class="demo-title">نمونه محاسبه و بررسی خروجی</div><div class="row"><input id="debugDistance" type="number" value="12"><button onclick="debugCalculation()">محاسبه و ثبت جزئیات در Console</button></div><div class="output" id="debugOut">خروجی در این قسمت و جزئیات در Console مرورگر نمایش داده می‌شود.</div></div>
+<p><b>کاربرد در محصول:</b> بررسی علت محاسبه اشتباه، پیدا کردن خطای فرم، تشخیص پاسخ ناموفق API و بررسی وضعیت متغیرها.</p>
+</section>
+
+<section id="project">
+<span class="tag">ترکیب مباحث</span><h2>پروژه پایانی: ساخت فرم ساده درخواست سفر</h2>
+<p>در این تمرین چند مفهوم را کنار هم قرار می‌دهیم: متغیر، شرط، تابع، شیء، رویداد، DOM و فرم. این پروژه صرفاً یک شبیه‌سازی سمت مرورگر است و سفر واقعی ثبت نمی‌کند.</p>
+<div class="demo">
+<div class="demo-title">سامانه آموزشی درخواست سفر</div>
+<form id="finalForm">
+<div class="row"><input id="finalPassenger" placeholder="نام مسافر"><input id="finalOrigin" placeholder="مبدأ"><input id="finalDestination" placeholder="مقصد"></div>
+<div class="row"><label>مسافت فرضی (کیلومتر)</label><input id="finalDistance" type="number" min="1" value="10"><button type="submit">محاسبه و ثبت آزمایشی</button></div>
+</form>
+<div class="output" id="finalOutput">پس از تکمیل اطلاعات، نتیجه اینجا نمایش داده می‌شود.</div>
+</div>
+<h3>کد کامل تابعی که در پروژه استفاده شده است</h3>
+<pre>function calculatePrice(distance) {
+  const pricePerKm = 10000;
+  return distance * pricePerKm;
+}</pre>
+<div class="explain"><b>ارتباط تابع با پروژه:</b><br>
+در رویداد ارسال فرم، مقدار مسافت از ورودی خوانده می‌شود. سپس دستور <code>calculatePrice(distance)</code> تابع را اجرا می‌کند. عدد برگشتی در ویژگی <code>price</code> شیء سفر قرار می‌گیرد. در پایان، DOM مقدار را به کاربر نشان می‌دهد. به این ترتیب تابع فقط یک قطعه کد جدا نیست؛ بخشی از جریان واقعی اجرای برنامه است.</div>
+<h3>منطق پروژه به زبان ساده</h3>
+<ol><li>فرم اطلاعات مسافر، مبدأ، مقصد و مسافت را می‌گیرد.</li><li>رویداد submit ارسال فرم را تشخیص می‌دهد.</li><li>مقادیر ورودی در متغیرها قرار می‌گیرند.</li><li>شرط‌ها خالی نبودن فیلدها و معتبر بودن مسافت را بررسی می‌کنند.</li><li>تابع <code>calculatePrice</code> مسافت را دریافت و مبلغ را برمی‌گرداند.</li><li>یک شیء اطلاعات سفر را نگهداری می‌کند.</li><li>DOM نتیجه را در صفحه نمایش می‌دهد.</li></ol>
+</section>
+
+<section id="practice">
+<span class="tag">یادگیری فعال</span><h2>تمرین‌های پیشنهادی</h2>
+<ol>
+<li>متغیر مقصد را تغییر دهید و مقدار جدید را در صفحه نمایش دهید.</li>
+<li>شرطی بنویسید که برای مسافت بیشتر از ۲۰ کیلومتر پیام جداگانه نشان دهد.</li>
+<li>یک راننده جدید به آرایه رانندگان اضافه کنید.</li>
+<li>برای شیء سفر یک ویژگی به نام <code>paymentStatus</code> اضافه کنید.</li>
+<li>با یک رویداد کلیک، وضعیت سفر را از «در انتظار راننده» به «راننده پیدا شد» تغییر دهید.</li>
+<li>آخرین مقصد را در LocalStorage ذخیره کنید و پس از بازکردن دوباره فایل آن را بخوانید.</li>
+<li>در پروژه پایانی، مبلغ را با تابعی جداگانه محاسبه کنید.</li>
+</ol>
+<h3>جمع‌بندی مفاهیم و نقش آن‌ها در محصول</h3>
+<table><tr><th>مفهوم</th><th>نقش نمونه در محصول</th></tr>
+<tr><td>متغیر و نوع داده</td><td>نگهداری اطلاعات سفر و کاربر</td></tr><tr><td>عملگر و شرط</td><td>محاسبه و تصمیم‌گیری</td></tr><tr><td>حلقه و آرایه</td><td>کار با فهرست رانندگان یا سفرها</td></tr><tr><td>تابع و شیء</td><td>ساخت منطق قابل استفاده مجدد و مدل‌سازی سفر</td></tr><tr><td>DOM و رویداد</td><td>واکنش صفحه به رفتار کاربر</td></tr><tr><td>فرم</td><td>دریافت و اعتبارسنجی ورودی</td></tr><tr><td>LocalStorage</td><td>ذخیره تنظیمات و داده غیرحساس در مرورگر</td></tr><tr><td>Fetch API</td><td>ارتباط با سرویس سمت سرور</td></tr><tr><td>Debugging</td><td>پیدا کردن و رفع خطا</td></tr></table>
+<div class="note"><b>نکته آموزشی:</b> تمام قیمت‌ها، رانندگان و وضعیت‌های این جزوه فرضی هستند. این نمونه، منطق آموزشی یک محصول مشابه را نشان می‌دهد و پیاده‌سازی واقعی یا زیرساخت داخلی اسنپ نیست.</div>
+</section>
+<footer>پایان جزوه تعاملی JavaScript | برای یادگیری، مثال‌ها را تغییر دهید و دوباره اجرا کنید.</footer>
+</main>
+<script>
+function showVariables(){
+ const name=document.getElementById('varName').value;
+ const dest=document.getElementById('varDest').value;
+ document.getElementById('varOut').textContent=`نام مسافر: ${name} | مقصد: ${dest}`;
+}
+function showTypes(){
+ const sample={name:"سارا",distance:12.5,driverAvailable:true,selectedDriver:null};
+ document.getElementById('typeOut').textContent=
+ `name: ${typeof sample.name} | distance: ${typeof sample.distance} | driverAvailable: ${typeof sample.driverAvailable} | selectedDriver: ${sample.selectedDriver}`;
+}
+function calculateFareDemo(){
+ const d=Number(document.getElementById('distanceInput').value);
+ const r=Number(document.getElementById('rateInput').value);
+ const out=document.getElementById('fareOut');
+ if(!Number.isFinite(d)||!Number.isFinite(r)||d<=0||r<0){
+  out.textContent="مسافت باید بیشتر از صفر و نرخ باید صفر یا بیشتر باشد.";
+  out.className="output warning";return;
+ }
+ const result=calculateFare(d,r);
+ out.textContent=`تابع calculateFare(${d}, ${r}) مقدار ${result.toLocaleString('fa-IR')} تومان را برگرداند.`;
+ out.className="output success";
+}
+function calculateFare(distance, pricePerKm) {
+ if (distance <= 0 || pricePerKm < 0) return 0;
+ const baseFare = distance * pricePerKm;
+ return baseFare;
+}
+function checkDriver(){
+ const available=document.getElementById('driverStatus').value==="yes";
+ const out=document.getElementById('driverOut');
+ out.textContent=available?"راننده موجود است؛ درخواست آزمایشی آماده ثبت است.":"در حال حاضر راننده‌ای در این مثال موجود نیست.";
+ out.className="output "+(available?"success":"warning");
+}
+const driverList=["علی","رضا","محمد","حسین"];
+function showDrivers(){
+ let result="";
+ for(let i=0;i<driverList.length;i++){result+=`${i+1}. ${driverList[i]}\n`;}
+ document.getElementById('loopOut').textContent=result;
+}
+function calculatePrice(distance){const pricePerKm=10000;return distance*pricePerKm;}
+function runPriceFunction(){
+ const d=Number(document.getElementById('functionDistance').value);
+ const out=document.getElementById('functionOut');
+ if(!Number.isFinite(d)||d<0){out.textContent="مسافت معتبر وارد کنید.";return;}
+ out.textContent=`خروجی تابع calculatePrice: ${calculatePrice(d).toLocaleString('fa-IR')} تومان`;
+}
+const tripList=["میدان آزادی به میدان فردوسی","فرودگاه به مرکز شهر","دانشگاه به میدان آزادی"];
+function listTrips(){document.getElementById('arrayOut').textContent=tripList.map((t,i)=>`${i+1}. ${t}`).join("\n");}
+function addTrip(){
+ const value=document.getElementById('newTrip').value.trim();
+ if(!value){document.getElementById('arrayOut').textContent="ابتدا عنوان سفر را وارد کنید.";return;}
+ tripList.push(value);document.getElementById('newTrip').value="";listTrips();
+}
+function showTripObject(){
+ const trip={origin:document.getElementById('objectOrigin').value,destination:document.getElementById('objectDestination').value,status:"در انتظار راننده"};
+ document.getElementById('objectOut').textContent=JSON.stringify(trip,null,2);
+}
+function changeDomText(){document.getElementById('domTitle').textContent="مقصد خود را انتخاب کنید";}
+function changeDomColor(){document.getElementById('domTitle').style.color="#137547";}
+document.getElementById('eventButton').addEventListener('click',function(){
+ document.getElementById('eventOut').textContent="رویداد click دریافت شد؛ درخواست آزمایشی ثبت شد.";
+});
+document.getElementById('tripForm').addEventListener('submit',function(event){
+ event.preventDefault();
+ const origin=document.getElementById('formOrigin').value.trim();
+ const destination=document.getElementById('formDestination').value.trim();
+ const out=document.getElementById('formOut');
+ if(!origin||!destination){out.textContent="لطفاً هر دو فیلد مبدأ و مقصد را تکمیل کنید.";out.className="output warning";}
+ else{out.textContent=`درخواست آزمایشی از ${origin} به ${destination} آماده شد.`;out.className="output success";}
+});
+function saveDestination(){
+ const value=document.getElementById('storageValue').value.trim();
+ const out=document.getElementById('storageOut');
+ if(!value){out.textContent="ابتدا مقصدی وارد کنید.";return;}
+ try{localStorage.setItem('trainingLastDestination',value);out.textContent="مقصد در مرورگر ذخیره شد.";}
+ catch(e){out.textContent="ذخیره‌سازی در این محیط در دسترس نیست: "+e.message;}
+}
+function readDestination(){
+ const out=document.getElementById('storageOut');
+ try{const value=localStorage.getItem('trainingLastDestination');out.textContent=value?`آخرین مقصد ذخیره‌شده: ${value}`:"هنوز مقصدی ذخیره نشده است.";}
+ catch(e){out.textContent="خواندن اطلاعات ممکن نیست: "+e.message;}
+}
+function deleteDestination(){
+ const out=document.getElementById('storageOut');
+ try{localStorage.removeItem('trainingLastDestination');out.textContent="مقصد ذخیره‌شده حذف شد.";}
+ catch(e){out.textContent="حذف اطلاعات ممکن نیست: "+e.message;}
+}
+async function loadSampleApi(){
+ const button=document.getElementById('fetchButton'),out=document.getElementById('fetchOut');
+ button.disabled=true;out.textContent="در حال دریافت اطلاعات...";
+ try{
+  const response=await fetch("https://jsonplaceholder.typicode.com/posts/1");
+  if(!response.ok)throw new Error("پاسخ سرور موفق نبود");
+  const data=await response.json();
+  out.textContent=`عنوان: ${data.title}\nمتن: ${data.body}`;
+ }catch(error){out.textContent="دریافت اطلاعات انجام نشد. اتصال اینترنت یا دسترسی به API را بررسی کنید.\nجزئیات: "+error.message;}
+ finally{button.disabled=false;}
+}
+function debugCalculation(){
+ const d=Number(document.getElementById('debugDistance').value);
+ const rate=10000,total=d*rate;
+ console.log("مسافت:",d,"نرخ هر کیلومتر:",rate,"مبلغ:",total);
+ document.getElementById('debugOut').textContent=`مسافت: ${d} | نرخ: ${rate.toLocaleString('fa-IR')} | مبلغ: ${total.toLocaleString('fa-IR')} تومان\nجزئیات نیز در Console ثبت شد.`;
+}
+document.getElementById('finalForm').addEventListener('submit',function(event){
+ event.preventDefault();
+ const passenger=document.getElementById('finalPassenger').value.trim();
+ const origin=document.getElementById('finalOrigin').value.trim();
+ const destination=document.getElementById('finalDestination').value.trim();
+ const distance=Number(document.getElementById('finalDistance').value);
+ const out=document.getElementById('finalOutput');
+ if(!passenger||!origin||!destination||!Number.isFinite(distance)||distance<=0){
+  out.textContent="نام مسافر، مبدأ، مقصد و مسافت معتبر را وارد کنید.";out.className="output warning";return;
+ }
+ const trip={passenger,origin,destination,distance,price:calculatePrice(distance),status:"در انتظار راننده"};
+ out.textContent=`درخواست آزمایشی آماده شد:\nمسافر: ${trip.passenger}\nمسیر: ${trip.origin} ← ${trip.destination}\nمسافت: ${trip.distance} کیلومتر\nکرایه فرضی: ${trip.price.toLocaleString('fa-IR')} تومان\nوضعیت: ${trip.status}`;
+ out.className="output success";
+});
+</script>
+</body>
+</html>
