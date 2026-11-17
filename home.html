@@ -40,43 +40,37 @@ th{background:var(--pale);color:var(--navy)}
 footer{text-align:center;color:var(--muted);padding:25px}
 @media(max-width:600px){header h1{font-size:21px}section{padding:16px}pre{font-size:12px}}
 
+
 .music-player {
-    width: 300px;
-    max-width: 100%;
-    margin: 20px auto;
-    padding: 15px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    width: 280px;
+    padding: 12px;
+
     background: white;
     border: 1px solid #D5DDE9;
-    border-radius: 15px;
+    border-radius: 12px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    z-index: 1000;
 }
 
 .music-player p {
     color: #2563EB;
     font-family: Tahoma;
     font-weight: bold;
-}
-
-.music-player button {
-    background: #2563EB;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin: 5px;
-    cursor: pointer;
-    font-family: Tahoma;
-}
-
-.music-player button:hover {
-    background: #1D4ED8;
+    margin: 5px 0 10px;
 }
 
 .music-player audio {
     width: 100%;
 }
 
+    
 </style>
 </head>
 <body>
@@ -429,16 +423,7 @@ console.log("هزینه نهایی:", totalPrice);</pre>
 </section>
 <footer>پایان جزوه تعاملی JavaScript | برای یادگیری، مثال‌ها را تغییر دهید و دوباره اجرا کنید.</footer>
 </main>
-<div class="music-player">
 
-   <p>🎵 موسیقی سایت</p>
-
-   <audio controls autoplay loop>
-         <source src="125.mp3" type="audio/mpeg">
-         مرورگر شما از پخش موسیقی پشتیبانی نمی‌کند.
-     </audio>
-
-</div>
 <script>
 function showVariables(){
  const name=document.getElementById('varName').value;
@@ -562,4 +547,13 @@ document.getElementById('finalForm').addEventListener('submit',function(event){
 
 
 </body>
+<div class="music-player">
+
+    <p>🎵 موسیقی سایت</p>
+
+    <audio id="siteMusic" controls loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+</div>
 </html>
